@@ -72,7 +72,9 @@ the database.
 
 ### 1. Neon: database + game server
 
-1. Neon CLI, logged in: `npm i -g neon@latest && neon auth`.
+1. Neon CLI, logged in: `npm i -g neon@latest && neon auth`. Deploying needs CLI 8+
+   (older versions reject `neon.ts`); `npm run deploy:backend` runs `npx neon@8`
+   for you, so an outdated global install still works.
 2. Create a project in a region that supports Functions. **AWS Asia Pacific
    (Singapore), `aws-ap-southeast-1`** is the closest to India; the others are
    `aws-us-east-1`, `aws-us-east-2`, `aws-eu-central-1`.
@@ -88,7 +90,7 @@ the database.
    the API. Until you know your Vercel URL, `https://*.vercel.app` is fine:
 
    ```bash
-   ALLOWED_ORIGINS="https://*.vercel.app" npm run deploy:backend   # = neon deploy
+   ALLOWED_ORIGINS="https://*.vercel.app" npm run deploy:backend   # = npx neon@8 deploy
    neon functions get sliver                                        # copy the URL
    curl https://<function-url>/health                               # {"ok":true,…}
    ```
@@ -138,4 +140,4 @@ the database.
 | `npm run db:up` / `db:migrate` / `db:seed` / `db:deploy` | local DB, migrations, seed, both |
 | `npm run db:generate` | new Drizzle migration after editing `schema.ts` |
 | `npm run bots -- CODE [n]` | bot players for solo testing |
-| `npm run deploy:backend` | `neon deploy` (needs `neon link` first) |
+| `npm run deploy:backend` | `neon deploy` via `npx neon@8` (needs `neon link` first) |

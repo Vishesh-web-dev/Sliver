@@ -77,7 +77,7 @@ export function CreatePage() {
               maxLength={LIMITS.displayName}
               autoComplete="nickname"
               onChange={(e) => setDisplayName(e.target.value)}
-              placeholder="Anjali"
+              placeholder="Vishesh"
               required
             />
           </label>

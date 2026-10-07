@@ -20,7 +20,7 @@
     "db:seed": "npm run db:seed -w @sliver/server",
     "db:deploy": "npm run db:migrate -w @sliver/server && npm run db:seed -w @sliver/server",
     "bots": "npm run bots -w @sliver/server --",
-    "deploy:backend": "neon deploy --no-env-pull"
+    "deploy:backend": "npx -y neon@8 deploy --no-env-pull"
   },
   "devDependencies": {
     "@neon/config": "^1.8.4",
