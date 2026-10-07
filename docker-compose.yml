@@ -1,0 +1,32 @@
+# Local development database.
+#
+#   npm run db:up        (docker compose up -d --wait)
+#   npm run db:migrate
+#   npm run db:seed
+#
+# Production uses Neon Postgres with the identical schema, migrations and `pg`
+# driver — only DATABASE_URL differs. The init script also creates the
+# `sliver_test` database used by the automated tests.
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: sliver-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sliver
+      POSTGRES_PASSWORD: sliver
+      POSTGRES_DB: sliver
+    ports:
+      # Host 5434 so it never collides with other local Postgres instances.
+      - '5434:5432'
+    volumes:
+      - sliver-postgres-data:/var/lib/postgresql/data
+      - ./scripts/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U sliver -d sliver']
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  sliver-postgres-data:

@@ -1,0 +1,32 @@
+{
+  "name": "sliver",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Sliver — a real-time multiplayer common-sense quiz game for friends.",
+  "workspaces": [
+    "packages/shared",
+    "apps/server",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n server,web -c blue,magenta \"npm run dev -w @sliver/server\" \"npm run dev -w @sliver/web\"",
+    "build": "npm run build -w @sliver/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "db:up": "docker compose up -d --wait",
+    "db:generate": "npm run db:generate -w @sliver/server",
+    "db:migrate": "npm run db:migrate -w @sliver/server",
+    "db:seed": "npm run db:seed -w @sliver/server",
+    "db:deploy": "npm run db:migrate -w @sliver/server && npm run db:seed -w @sliver/server",
+    "bots": "npm run bots -w @sliver/server --",
+    "deploy:backend": "neon deploy --no-env-pull"
+  },
+  "devDependencies": {
+    "@neon/config": "^1.8.4",
+    "concurrently": "^9.2.1"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
